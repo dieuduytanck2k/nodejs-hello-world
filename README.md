@@ -19,3 +19,5 @@ Explanation:
 - `USER node:` run the app as a non-root user for better security.
 - `EXPOSE 8080:` the app runs on port 8080.
 - `CMD:` start the app with server.js.
+
+# 2. Lint & unit tests
