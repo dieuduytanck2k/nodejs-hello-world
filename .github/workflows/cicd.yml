@@ -1,135 +1,135 @@
-name: npm build, lint, test, vulnerability scan and publish
+# name: npm build, lint, test, vulnerability scan and publish
 
-on:
-  push:
-    branches: [ main ]  
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]  
+#   pull_request:
+#     branches: [ main ]
 
-env:
-  REGION: asia-southeast1
-  PROJECT_ID: devops-467006
-  GAR_LOCATION: asia-southeast1-docker.pkg.dev/devops-467006/nodejs-images/nodejs-app
-  SERVICE: nodejs-app
-  SVC_ACCOUNT_EMAIL: githubactions-sa@devops-467006.iam.gserviceaccount.com
-jobs:
-  build-and-publish:
-    name: build and publish
-    runs-on: ubuntu-latest
+# env:
+#   REGION: asia-southeast1
+#   PROJECT_ID: devops-467006
+#   GAR_LOCATION: asia-southeast1-docker.pkg.dev/devops-467006/nodejs-images/nodejs-app
+#   SERVICE: nodejs-app
+#   SVC_ACCOUNT_EMAIL: githubactions-sa@devops-467006.iam.gserviceaccount.com
+# jobs:
+#   build-and-publish:
+#     name: build and publish
+#     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      security-events: write
+#     permissions:
+#       contents: read
+#       security-events: write
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'     
-          cache: 'npm'
+#       - name: Set up Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '20'     
+#           cache: 'npm'
 
-      - name: Install deps
-        run: npm ci               
+#       - name: Install deps
+#         run: npm ci               
 
-      - name: Run tests
-        run: npm test
+#       - name: Run tests
+#         run: npm test
         
-      - name: Lint
-        run: npm run lint
+#       - name: Lint
+#         run: npm run lint
 
-      - name: Trivy FS scan (repo)
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-fs.sarif'
-          severity: 'HIGH,CRITICAL'        
-          ignore-unfixed: true
-          exit-code: '0'              
+#       - name: Trivy FS scan (repo)
+#         uses: aquasecurity/trivy-action@0.28.0
+#         with:
+#           scan-type: 'fs'
+#           scan-ref: '.'
+#           format: 'sarif'
+#           output: 'trivy-fs.sarif'
+#           severity: 'HIGH,CRITICAL'        
+#           ignore-unfixed: true
+#           exit-code: '0'              
           
-      - name: Upload SARIF (FS scan) to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()                  
-        with:
-          sarif_file: 'trivy-fs.sarif'
-          category: trivy-fs
+#       - name: Upload SARIF (FS scan) to GitHub Security
+#         uses: github/codeql-action/upload-sarif@v3
+#         if: always()                  
+#         with:
+#           sarif_file: 'trivy-fs.sarif'
+#           category: trivy-fs
 
-      - id: auth
-        name: Auth to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+#       - id: auth
+#         name: Auth to Google Cloud
+#         uses: google-github-actions/auth@v2
+#         with:
+#           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
+#       - name: "Set up Cloud SDK"
+#         uses: "google-github-actions/setup-gcloud@v1"
 
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
+#       - name: "Use gcloud CLI"
+#         run: "gcloud info"
 
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+#       - name: "Docker auth"
+#         run: |-
+#           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
       
-      - name: Short SHA
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+#       - name: Short SHA
+#         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
           
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.GAR_LOCATION }}:latest
-            ${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }}
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v6
+#         with:
+#           context: .
+#           push: true
+#           tags: |
+#             ${{ env.GAR_LOCATION }}:latest
+#             ${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }}
 
-      - name: Trivy Image scan
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: 'image'
-          image-ref: '${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }}'
-          format: 'sarif'
-          output: 'trivy-image.sarif'
-          vuln-type: 'os,library'
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '0'                
+#       - name: Trivy Image scan
+#         uses: aquasecurity/trivy-action@0.28.0
+#         with:
+#           scan-type: 'image'
+#           image-ref: '${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }}'
+#           format: 'sarif'
+#           output: 'trivy-image.sarif'
+#           vuln-type: 'os,library'
+#           severity: 'HIGH,CRITICAL'
+#           ignore-unfixed: true
+#           exit-code: '0'                
 
-      - name: Upload SARIF (Image scan) to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: 'trivy-image.sarif'
-          category: trivy-image
+#       - name: Upload SARIF (Image scan) to GitHub Security
+#         uses: github/codeql-action/upload-sarif@v3
+#         if: always()
+#         with:
+#           sarif_file: 'trivy-image.sarif'
+#           category: trivy-image
 
-      - name: 'Deploy to Cloud Run'
-        run: |
-          gcloud run deploy ${{ env.SERVICE }} \
-            --image ${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }} \
-            --region ${{ env.REGION }} \
-            --platform managed \
-            --allow-unauthenticated \
-            --startup-probe=httpGet.path=/startup,httpGet.port=8080,periodSeconds=5,timeoutSeconds=5,failureThreshold=12 \
-            --liveness-probe=httpGet.path=/healthz,httpGet.port=8080,periodSeconds=30,timeoutSeconds=4,failureThreshold=3
+#       - name: 'Deploy to Cloud Run'
+#         run: |
+#           gcloud run deploy ${{ env.SERVICE }} \
+#             --image ${{ env.GAR_LOCATION }}:${{ env.SHORT_SHA }} \
+#             --region ${{ env.REGION }} \
+#             --platform managed \
+#             --allow-unauthenticated \
+#             --startup-probe=httpGet.path=/startup,httpGet.port=8080,periodSeconds=5,timeoutSeconds=5,failureThreshold=12 \
+#             --liveness-probe=httpGet.path=/healthz,httpGet.port=8080,periodSeconds=30,timeoutSeconds=4,failureThreshold=3
 
-      - name: Route all traffic to latest
-        run: |
-          gcloud run services update-traffic ${{ env.SERVICE }} \
-          --region ${{ env.REGION }} \
-          --to-latest
+#       - name: Route all traffic to latest
+#         run: |
+#           gcloud run services update-traffic ${{ env.SERVICE }} \
+#           --region ${{ env.REGION }} \
+#           --to-latest
 
-      - name: Verify traffic assignment
-        run: |
-          gcloud run services describe ${{ env.SERVICE }} \
-          --region ${{ env.REGION }} \
-          --format="yaml(status.traffic)"
+#       - name: Verify traffic assignment
+#         run: |
+#           gcloud run services describe ${{ env.SERVICE }} \
+#           --region ${{ env.REGION }} \
+#           --format="yaml(status.traffic)"
             
-      - name: 'Test deployment'
-        run: |
-          SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE }} --region ${{ env.REGION }} --format "value(status.url)")
-          echo "Service URL: $SERVICE_URL"
-          curl "$SERVICE_URL"
-        continue-on-error: true
+#       - name: 'Test deployment'
+#         run: |
+#           SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE }} --region ${{ env.REGION }} --format "value(status.url)")
+#           echo "Service URL: $SERVICE_URL"
+#           curl "$SERVICE_URL"
+#         continue-on-error: true
