@@ -47,6 +47,9 @@ Outputs results to trivy-fs.sarif
 
 Upload results to GitHub Security > Code scanning 
 
+<img src="./image/security.png" alt="security" width="500"/>
+
+
 - `exit-code:`
 
 - `0:` pipeline continues even if vulnerabilities are found.
@@ -137,3 +140,4 @@ Ensures 100% of traffic is routed to the most recent deployment.
         - Internet egress: follows Google Cloud networking pricing https://cloud.google.com/vpc/network-pricing?hl=en
 
     REF: https://cloud.google.com/artifact-registry/pricing
+
