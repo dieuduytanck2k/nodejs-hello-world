@@ -24,9 +24,6 @@ Explanation:
 
 <img src="./image/key.png" alt="key" width="400"/>
 
-<img src="./image/usekey.png" alt="usekey" width="400"/>
-
-
 # 3. Lint & unit tests
 
 <img src="./image/lint&test.png" alt="lint&test" width="500"/>
@@ -63,7 +60,7 @@ Upload results to GitHub Security > Code scanning
 
 # 6. Build image
 
-<img src="./image/buildimage.png" alt="buildimage" width="500"/>
+<img src="./image/builddockerimage.png" alt="buildimage" width="500"/>
 
 Build image with two tags: SHORT_SHA and latest
 
