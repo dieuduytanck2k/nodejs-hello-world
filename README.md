@@ -9,7 +9,7 @@ See detailed instructions here:
 # II. CICD and others
 # 1. Dockerfile
 
-<img src="./image/dockerfile.png" alt="gcs" width="300"/>
+<img src="./image/dockerfile.png" alt="gcs" width="500"/>
 
 Explanation:
 
