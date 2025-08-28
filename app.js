@@ -21,7 +21,7 @@ app.get('/healthz', (req, res) => {
   res.status(200).send('ok');
 });
 
-app.use('/', (req, res) => res.send('Hello World123'));
+app.use('/', (req, res) => res.send('Hello World'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
