@@ -29,7 +29,7 @@ Explanation:
 
 # 3. Lint & unit tests
 
-<img src="./image/lint&test.png" alt="lint&test" width="400"/>
+<img src="./image/lint&test.png" alt="lint&test" width="500"/>
 
 Runs all tests using Jest to ensure the application works correctly.
 
@@ -37,7 +37,7 @@ Checks code style and quality using ESLint (Airbnb style guide).
 
 # 4. Trivy FS scan (repo)
 
-<img src="./image/trivy-fs.png" alt="trivy-fs" width="400"/>
+<img src="./image/trivy-fs.png" alt="trivy-fs" width="500"/>
 
 Scans the repository and generates a SARIF report
 
@@ -55,13 +55,13 @@ Upload results to GitHub Security > Code scanning
 
 # 5. Build image
 
-<img src="./image/buildimage.png" alt="buildimage" width="400"/>
+<img src="./image/buildimage.png" alt="buildimage" width="500"/>
 
 Build image with two tags: SHORT_SHA and latest
 
 # 6. Trivy Image scan
 
-<img src="./image/trivy-image.png" alt="trivy-image" width="400"/>
+<img src="./image/trivy-image.png" alt="trivy-image" width="500"/>
 
 Scans the container image and generates a SARIF report
 
@@ -79,11 +79,11 @@ Upload results to GitHub Security > Code scanning
 
 # 7. Push Image with 2 tags
 
-<img src="./image/push.png" alt="push" width="400"/>
+<img src="./image/push.png" alt="push" width="500"/>
 
 # 8. Deploy to Cloud Run with healcheck and Route traffic to latest version
 
-<img src="./image/cloudrun.png" alt="cloudrun" width="400"/>
+<img src="./image/cloudrun.png" alt="cloudrun" width="600"/>
 
 Deploys the service with the new Docker image.
 
