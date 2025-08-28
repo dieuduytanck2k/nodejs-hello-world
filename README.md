@@ -13,9 +13,9 @@ See detailed instructions here:
 
 Explanation:
 
-Multi-stage build:
-    deps: install only production dependencies (excluding devDependencies).
-    runtime: copy code and node_modules from the first stage -> resulting in a smaller image.
-USER node: run the app as a non-root user for better security.
-EXPOSE 8080: the app runs on port 8080.
-CMD: start the app with server.js.
+- `Multi-stage build:`
+    - `deps:` install only production dependencies (excluding devDependencies).
+    - `runtime:` copy code and node_modules from the first stage -> resulting in a smaller image.
+- `USER node:` run the app as a non-root user for better security.
+- `EXPOSE 8080:` the app runs on port 8080.
+- `CMD:` start the app with server.js.
