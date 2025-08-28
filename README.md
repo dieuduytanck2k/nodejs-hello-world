@@ -97,56 +97,56 @@ Ensures 100% of traffic is routed to the most recent deployment.
 
 # 9. Estimate cost
 
-- `Github actions`
-- **Public repositories**: unlimited free usage with GitHub-hosted runners.  
-- **Private repositories**: free quota each month (per account plan):  
-  - Free: 2,000 minutes + 500 MB storage  
-  - Pro: 3,000 minutes + 1 GB storage  
-  - Team: 3,000 minutes + 2 GB storage  
-  - Enterprise: 50,000 minutes + 50 GB storage  
-- Runners have multipliers: Linux = 1×, Windows = 2×, macOS = 10×. 
+- **Github actions**
+    - **Public repositories**: unlimited free usage with GitHub-hosted runners.  
+    - **Private repositories**: free quota each month (per account plan):  
+        - Free: 2,000 minutes + 500 MB storage  
+        - Pro: 3,000 minutes + 1 GB storage  
+        - Team: 3,000 minutes + 2 GB storage  
+        - Enterprise: 50,000 minutes + 50 GB storage  
+    - **Runners have multipliers**: Linux = 1×, Windows = 2×, macOS = 10×. 
 
 REF: https://docs.github.com/en/billing/concepts/product-billing/github-actions
 
-- `Cloud Run`
+- **Cloud Run**
 
 Pay only for what you use, rounded to the nearest 100ms.
 
-Billing includes:
+- **Billing includes:**
 
-    vCPU-seconds
+        vCPU-seconds
 
-    Memory-seconds
+        Memory-seconds
 
-    Number of requests
+        Number of requests
 
-    Network egress
+        Network egress
 
-Free tier (per month, us-central1 pricing):
+- **Free tier (per month, us-central1 pricing):**
 
-    2M requests
+        2M requests
 
-    180,000 vCPU-seconds
+        180,000 vCPU-seconds
 
-    360,000 GiB-seconds memory
+        360,000 GiB-seconds memory
 
 
 REF: https://cloud.google.com/run/pricing?hl=en
 
-- `Google Artifact Registry`
+- **Google Artifact Registry**
 
-Storage:
+    - **Storage:**
 
-    First 0.5 GB free per month.
+        First 0.5 GB free per month.
 
-    Above 0.5 GB → $0.10 per GB / month.
+        Above 0.5 GB → $0.10 per GB / month.
 
-Data transfer:
+- **Data transfer:**
 
-    Free if traffic stays in the same region or continent (many intra-continent cases are free).
+        Free if traffic stays in the same region or continent (many intra-continent cases are free).
 
-    Cross-region transfer: $0.01–$0.15 per GB depending on regions.
+        Cross-region transfer: $0.01–$0.15 per GB depending on regions.
 
-    Internet egress: follows Google Cloud networking pricing https://cloud.google.com/vpc/network-pricing?hl=en
+        Internet egress: follows Google Cloud networking pricing https://cloud.google.com/vpc/network-pricing?hl=en
 
 REF: https://cloud.google.com/artifact-registry/pricing
