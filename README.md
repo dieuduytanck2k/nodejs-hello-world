@@ -56,13 +56,18 @@ Upload results to GitHub Security > Code scanning
 
 - `1:` pipeline fails when vulnerabilities are found.
 
-# 5. Build image
+# 5. Authen with Google Cloud and configuration gcloud
+
+<img src="./image/login.png" alt="login" width="500"/>
+
+
+# 6. Build image
 
 <img src="./image/buildimage.png" alt="buildimage" width="500"/>
 
 Build image with two tags: SHORT_SHA and latest
 
-# 6. Trivy Image scan
+# 7. Trivy Image scan
 
 <img src="./image/trivy-image.png" alt="trivy-image" width="500"/>
 
@@ -74,17 +79,19 @@ Outputs results to trivy-image.sarif
 
 Upload results to GitHub Security > Code scanning 
 
+<img src="./image/security.png" alt="security" width="500"/>
+
 - `exit-code:`
 
 - `0:` pipeline continues even if vulnerabilities are found.
 
 - `1:` pipeline fails when vulnerabilities are found.
 
-# 7. Push Image with 2 tags
+# 8. Push Image with 2 tags
 
 <img src="./image/push.png" alt="push" width="500"/>
 
-# 8. Deploy to Cloud Run with healcheck and Route traffic to latest version
+# 9. Deploy to Cloud Run with healcheck and Route traffic to latest version
 
 <img src="./image/cloudrun.png" alt="cloudrun" width="600"/>
 
@@ -98,7 +105,7 @@ Deploys the service with the new Docker image.
 
 Ensures 100% of traffic is routed to the most recent deployment.
 
-# 9. Estimate cost
+# 10. Estimate cost
 
 - **Github actions**
     - **Public repositories**: unlimited free usage with GitHub-hosted runners.  
