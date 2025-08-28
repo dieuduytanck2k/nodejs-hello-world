@@ -102,7 +102,18 @@ Deploys the service with the new Docker image.
 
 Ensures 100% of traffic is routed to the most recent deployment.
 
-# 10. Estimate cost
+# 12. Rollback by Routing Traffic to the Previous Revision (Manual with gcloud)
+
+```config
+gcloud run services update-traffic <app name> --region=<region name> --to-revisions=<revisions name>=100
+```
+
+Example:
+
+gcloud run services update-traffic nodejs-app --region=asia-southeast1 --to-revisions=nodejs-app-00007-bn5=100
+
+
+# 11. Estimate cost
 
 - **Github actions**
     - **Public repositories**: unlimited free usage with GitHub-hosted runners.  
